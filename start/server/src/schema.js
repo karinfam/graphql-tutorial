@@ -39,6 +39,31 @@ const typeDefs = gql`
 	}
 
 	# Query
+	type Query {
+		launches(pageSize: Int, after: String): LaunchConnection
+		launch(id: ID!): Launch
+		me: User
+	}
+
+	type LaunchConnection {
+		cursor: String!
+		hasMore: Boolean!
+		launches: [Launch]!
+	}
+
+	# Mutations
+	type Mutation {
+		bookTrips(launchIds: [ID]!): TripUpdateResponse!
+		cancelTrip(launchId: ID!): TripUpdateResponse!
+		login(email: String): String # login token
+	}
+
+	# TripUpdateResponse
+	type TripUpdateResponse {
+		success: Boolean!
+		message: String
+		launches: [Launch]
+	}
 `;
 
 module.exports = typeDefs;
